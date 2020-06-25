@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2020_06_25_113821) do
   create_table "positions", force: :cascade do |t|
     t.string "title"
     t.string "city"
-    t.string "description"
+    t.text "description"
     t.string "company_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
