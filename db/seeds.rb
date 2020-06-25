@@ -3,16 +3,29 @@ require 'net/http'
 
 Application.destroy_all
 Position.destroy_all
+Company.destroy_all
 User.destroy_all
 
 u = User.create(first_name: 'elliott', last_name: 'king', email: 'ek@fi.com')
 
 def seed_positions(data)
   data.each do |position|
-    city =  "New York"
+    company = Company.find_by(name: position["company"])
+    if !company
+      company = Company.create!(
+        name: position["company"], 
+        website: position["company_url"], 
+        company_logo: position["company_logo"])
+    end
+
+    city =  position["location"]
     # removes html tags
     description = Nokogiri::HTML::DocumentFragment.parse(position["description"]).text
-    p = Position.create!(title: position['title'], city: city, description: description)
+    p = Position.create!(
+      title: position['title'], 
+      city: city, 
+      description: description, 
+      company: company)
   end
 end
 

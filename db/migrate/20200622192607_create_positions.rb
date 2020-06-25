@@ -4,6 +4,7 @@ class CreatePositions < ActiveRecord::Migration[6.0]
       t.string :title
       t.string :city
       t.string :description
+      t.string :company_id
 
       t.timestamps
     end
