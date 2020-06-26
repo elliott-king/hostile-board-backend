@@ -12,10 +12,16 @@ def seed_positions(data)
   data.each do |position|
     company = Company.find_by(name: position["company"])
     if !company
+      company_user = User.create!(
+        first_name: 'admin',
+        last_name: position['company'],
+        email: 'admin@' + position['company'] + '.com',
+      )
       company = Company.create!(
         name: position["company"], 
         website: position["company_url"], 
-        company_logo: position["company_logo"])
+        company_logo: position["company_logo"],
+        user_id: company_user.id)
     end
 
     city =  position["location"]
