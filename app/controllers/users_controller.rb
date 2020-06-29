@@ -19,16 +19,20 @@ class UsersController < ApplicationController
 
   def positions
     user = User.find(params[:id])
-    if !user.company
-      render json: {error: "User has no company"}
-    else
+    if user.is_company
       render json: user.company.positions
+    else
+      render json: {error: "User has no company"}
     end
   end
 
   def company
     user = User.find(params[:id])
+    if user.is_company
     render json: user.company
+    else
+      render json: {error: "User has no company"}
+  end
   end
 
   # TODO: messages

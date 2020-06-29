@@ -16,6 +16,7 @@ def seed_positions(data)
         first_name: 'admin',
         last_name: position['company'],
         email: 'admin@' + position['company'] + '.com',
+        is_company: true,
       )
       company = Company.create!(
         name: position["company"], 
