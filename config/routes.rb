@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :messages
   resources :companies
   resources :applications
   resources :positions
@@ -7,6 +8,7 @@ Rails.application.routes.draw do
       get 'applications'
       get 'company'
       get 'positions'
+      get 'messages'
     end
   end
   

@@ -1,6 +1,7 @@
 require 'nokogiri'
 require 'net/http'
 
+Message.destroy_all
 Application.destroy_all
 Position.destroy_all
 Company.destroy_all
@@ -61,3 +62,4 @@ loop do
   end
 end
 
+m = Message.create!(user: u, company: Company.last, content: "This is a sample message from me to thee")
