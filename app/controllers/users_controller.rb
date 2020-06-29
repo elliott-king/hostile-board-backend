@@ -14,7 +14,7 @@ class UsersController < ApplicationController
 
   def applications
     user = User.find(params[:id])
-    render json: user.applications
+    render json: user.applications, include: [:position => {:only => [:id, :title]}]
   end
 
   def positions

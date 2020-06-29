@@ -4,6 +4,11 @@ class ApplicationsController < ApplicationController
     render json: a
   end
 
+  def show
+    a = Application.find(params[:id])
+    render json: a, include: [:position => {:only => [:id, :title]}]
+  end
+
   private
   def application_params
     params.require(:application).permit(
