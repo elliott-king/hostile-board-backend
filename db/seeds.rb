@@ -62,4 +62,17 @@ loop do
   end
 end
 
-m = Message.create!(user: u, company: Company.last, content: "This is a sample message from me to thee")
+m = Message.create!(
+  user: u, 
+  company: Company.last, 
+  content: "This is a sample message from me to thee",
+  position: Company.last.positions.first,
+)
+a = Application.create!(
+  user: u, 
+  position: Position.last, 
+  skills: ["Ruby", "Rails"], 
+  job_history: "something, somewhere", 
+  projects: "somewhat, sometime", 
+  written_introduction: "I am broke"
+)
