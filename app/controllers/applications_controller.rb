@@ -1,4 +1,9 @@
 class ApplicationsController < ApplicationController
+
+  def index
+    render json: Application.all, include: [:position => {:only => [:id, :title]}]
+  end
+
   def create
     a = Application.create!(application_params)
     render json: a
