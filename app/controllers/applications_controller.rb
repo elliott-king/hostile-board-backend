@@ -1,7 +1,7 @@
 class ApplicationsController < ApplicationController
 
   def index
-    render json: Application.all, include: [:position => {:only => [:id, :title]}]
+    render json: Application.all, include: [:user, :position => {:only => [:id, :title]}]
   end
 
   def create
@@ -11,7 +11,8 @@ class ApplicationsController < ApplicationController
 
   def show
     a = Application.find(params[:id])
-    render json: a, include: [:position => {:only => [:id, :title]}]
+    render json: a, include: [:user, :position => {:only => [:id, :title]}]
+  end
   end
 
   private
