@@ -13,6 +13,13 @@ class ApplicationsController < ApplicationController
     a = Application.find(params[:id])
     render json: a, include: [:user, :position => {:only => [:id, :title]}]
   end
+
+  def messages
+    a = Application.find(params[:id])
+    p = a.position
+    u = a.user
+    messages = Message.where(position: p, user: u)
+    render json: messages, include: [:company, :user, :position => {:only => [:id, :title]}]
   end
 
   private

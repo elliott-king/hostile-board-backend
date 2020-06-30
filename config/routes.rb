@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   resources :messages
   resources :companies
-  resources :applications
+  resources :applications do
+    member do
+      get 'messages'
+    end
+  end
   resources :positions
   resources :users do
     member do
