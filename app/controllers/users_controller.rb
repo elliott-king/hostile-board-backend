@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   def create
     user = User.find_by(email: params[:email])
     if user 
-      render json: {error: "email already taken"}
+      render json: {error: "email already taken"}, status: 400
     else
       user = User.create!(email: params[:email], first_name: params[:first_name], last_name: params[:last_name])
       if params[:pdf]
