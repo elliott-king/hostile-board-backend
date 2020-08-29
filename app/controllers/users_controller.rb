@@ -6,20 +6,11 @@ class UsersController < ApplicationController
     if user 
       render json: {error: "email already taken"}, status: 400
     else
-      user = User.create!(email: params[:email], first_name: params[:first_name], last_name: params[:last_name])
-      if params[:pdf]
-        t = Thread.new do
-          pdf_id = SecureRandom.uuid
-          # https://stackoverflow.com/questions/21707595
-          filename = "#{Rails.root}/resumes/#{pdf_id}.pdf"
-          File.open(filename, 'wb') do |file|
-            file.write(params[:pdf].read)
-          end
-          resume = parse_resume(filename)
-          user.update!(resume: resume)
-        end
-      end
-      render json: user
+      resume = params[:pdf]
+      params = user_params.except(:pdf)
+      user = User.create!(params)
+      user.resume.attach(resume) if resume.present? && !!user
+      render json: user.as_json(root: false, methods: :resume_url).except('updated_at')
     end
   end
 
@@ -65,6 +56,10 @@ class UsersController < ApplicationController
   end
 
   private
+  def user_params
+    params.permit(:email, :first_name, :last_name, :pdf)
+  end
+
   def parse_resume(filepath)
     # https://stackoverflow.com/questions/18645352/call-python-script-from-ruby
     parser_runner = "/Users/mymac/Documents/workspaces/learn/hostile-board-backend/parser_runner.py"
